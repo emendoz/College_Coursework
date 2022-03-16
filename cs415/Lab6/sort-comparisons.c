@@ -20,6 +20,7 @@
 *     - CS415 Quicksort Reading      (https://blue.cs.sonoma.edu/~hwalker/courses/415-sonoma.sp22/readings/reading-quicksort.php)          *
 *     - CS415 Lecture for March 14 on more efficient code styles                                                                           *
 *     - Merge sort:                                                                                                                        *
+*     - Heap sort:                                                                                                                         *
 *     [include textbook(s), CS 415 labs or readings;                                                                                       *
 *       complete citations for Web or other written sources]                                                                               *
 *   Help obtained                                                                                                                          *
@@ -129,45 +130,50 @@ void mergeSort(int a [], int lef, int rig) {
   }
 }
 
-void swap(int *a, int *b) {
-   int tmp = *a;
-   *a = *b;
-   *b = tmp;
-  }
+// To heapify a subtree rooted with node i which is
+// an index in arr[]. n is size of heap
+void heapify(int a [], int n, int i)
+{
+  int largest = i; // Initialize largest as root
+  int l = 2 * i + 1; // left = 2*i + 1
+  int r = 2 * i + 2; // right = 2*i + 2
 
-void heapify(int a [], int n, int i) {
-    int max = i; //Initialize max as root
-    int leftChild = 2 * i + 1;
-    int rightChild = 2 * i + 2;
-  
-    //If left child is greater than root
-    if (leftChild < n && a[leftChild] > a[max])
-      max = leftChild;
-  
-    //If right child is greater than max
-    if (rightChild < n && a[rightChild] > a[max])
-      max = rightChild;
-  
-    //If max is not root
-    if (max != i) {
-      swap(&a[i], &a[max]);
-      //heapify the affected sub-tree recursively
-      heapify(a, n, max);
-    }
+  // If left child is larger than root
+  if (l < n && a[l] > a[largest])
+      largest = l;
+
+  // If right child is larger than largest so far
+  if (r < n && a[r] > a[largest])
+      largest = r;
+
+  // If largest is not root
+  if (largest != i) {
+      int temp = a[i];
+      a[i] = a[largest];
+      a[largest] = temp;
+
+      // Recursively heapify the affected sub-tree
+      heapify(a, n, largest);
+  }
 }
 
 /* Heap sort */
-void heapSort (int a [], int n) {
-    //Rearrange array (building heap)
-    for (int i = n / 2 - 1; i >= 0; i--)
+void heapSort(int a [], int n) {
+
+  // Build heap (rearrange array)
+  for (int i = n / 2 - 1; i >= 0; i--)
       heapify(a, n, i);
- 
-    //Extract elements from heap one by one
-    for (int i = n - 1; i >= 0; i--) {
-      swap(&a[0], &a[i]); //Current root moved to the end
-  
-    heapify(a, i, 0); //calling max heapify on the heap reduced
-    }
+
+  // One by one extract an element from heap
+  for (int i = n - 1; i > 0; i--) {
+      // Move current root to end
+      int temp = a[0];
+      a[0] = a[i];
+      a[i] = temp;
+
+      // call max heapify on the reduced heap
+      heapify(a, i, 0);
+  }
 }
 
 /* Quicksort Helper */
