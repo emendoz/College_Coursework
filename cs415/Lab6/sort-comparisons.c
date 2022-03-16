@@ -68,7 +68,7 @@ void insertionSort (int a [], int n) {
 
 void mergeHelper(int a [], int left, int mid, int right) {
     int i, j, k;
-    int size1 = mid - l + 1;
+    int size1 = mid - left + 1;
     int size2 = right - mid;
   
     /* create temp arrays */
@@ -77,13 +77,13 @@ void mergeHelper(int a [], int left, int mid, int right) {
     /* Copy data to temp arrays L[] and R[] */
     for (i = 0; i < size1; i++)
         Left[i] = a[left + i];
-    for (j = 0; j < n2; j++)
+    for (j = 0; j < size2; j++)
         Right[j] = a[mid + 1 + j];
   
     /* Merge the temp arrays back into arr[l..r]*/
     i = 0; // Initial index of first subarray
     j = 0; // Initial index of second subarray
-    k = l; // Initial index of merged subarray
+    k = left; // Initial index of merged subarray
     while (i < size1 && j < size2) {
         if (Left[i] <= Right[j]) {
             a[k] = Left[i];
@@ -128,7 +128,7 @@ void mergeSortHelper(int a [], int left, int right) {
 }
 
 /* Merge sort */
-void mergeSort (int a [], int n) {}
+void mergeSort (int a [], int n) {
    mergeSortHelper(a, 0, n - 1);
 }
 
