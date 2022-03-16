@@ -67,7 +67,7 @@ void insertionSort (int a [], int n) {
 }
 
 // Merge two subarrays L and M into arr
-void mergeHelper(int a [], int p, int q, int r) {
+void merge(int arr[], int p, int q, int r) {
 
   // Create L ← A[p..q] and M ← A[q+1..r]
   int n1 = q - p + 1;
@@ -76,9 +76,9 @@ void mergeHelper(int a [], int p, int q, int r) {
   int L[n1], M[n2];
 
   for (int i = 0; i < n1; i++)
-    L[i] = a[p + i];
+    L[i] = arr[p + i];
   for (int j = 0; j < n2; j++)
-    M[j] = a[q + 1 + j];
+    M[j] = arr[q + 1 + j];
 
   // Maintain current index of sub-arrays and main array
   int i, j, k;
@@ -90,10 +90,10 @@ void mergeHelper(int a [], int p, int q, int r) {
   // elements L and M and place them in the correct position at A[p..r]
   while (i < n1 && j < n2) {
     if (L[i] <= M[j]) {
-      a[k] = L[i];
+      arr[k] = L[i];
       i++;
     } else {
-      a[k] = M[j];
+      arr[k] = M[j];
       j++;
     }
     k++;
@@ -102,13 +102,13 @@ void mergeHelper(int a [], int p, int q, int r) {
   // When we run out of elements in either L or M,
   // pick up the remaining elements and put in A[p..r]
   while (i < n1) {
-    a[k] = L[i];
+    arr[k] = L[i];
     i++;
     k++;
   }
 
   while (j < n2) {
-    a[k] = M[j];
+    arr[k] = M[j];
     j++;
     k++;
   }
@@ -125,7 +125,7 @@ void mergeSort(int a [], int lef, int rig) {
     mergeSort(a, m + 1, rig);
 
     // Merge the sorted subarrays
-    mergeHelper(arr, lef, m, rig);
+    merge(a, lef, m, rig);
   }
 }
 
@@ -364,21 +364,21 @@ int main ( ) {
     printf ("Merge sort %11d", size);
     // ascending data
     start_time = clock ();
-    mergeSort (tempAsc, size);
+    mergeSort(tempAsc, 0, size - 1);
     end_time = clock();
     elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
     printf ("%14.1lf", elapsed_time);
 
     // random data
     start_time = clock ();
-    mergeSort (tempRan, size);
+    mergeSort(tempRan, 0, size - 1);
     end_time = clock();
     elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
     printf ("%15.1lf", elapsed_time);
      
     // descending data
     start_time = clock ();
-    mergeSort (tempDes, size);
+    mergeSort(tempDes, 0, size - 1);
     end_time = clock();
     elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
     printf ("%15.1lf", elapsed_time);
