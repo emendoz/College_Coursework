@@ -132,10 +132,45 @@ void mergeSort (int a [], int n) {
    mergeSortHelper(a, 0, n - 1);
 }
 
+void swap(int *a, int *b) {
+   int tmp = *a;
+   *a = *b;
+   *b = tmp;
+  }
+
+void heapify(int a [], int n, int i) {
+    int max = i; //Initialize max as root
+    int leftChild = 2 * i + 1;
+    int rightChild = 2 * i + 2;
+  
+    //If left child is greater than root
+    if (leftChild < n && a[leftChild] > a[max])
+      max = leftChild;
+  
+    //If right child is greater than max
+    if (rightChild < n && a[rightChild] > a[max])
+      max = rightChild;
+  
+    //If max is not root
+    if (max != i) {
+      swap(&a[i], &a[max]);
+      //heapify the affected sub-tree recursively
+      heapify(a, n, max);
+    }
+}
 
 /* Heap sort */
 void heapSort (int a [], int n) {
-   
+    //Rearrange array (building heap)
+    for (int i = n / 2 - 1; i >= 0; i--)
+      heapify(a, n, i);
+ 
+    //Extract elements from heap one by one
+    for (int i = n - 1; i >= 0; i--) {
+      swap(&a[0], &a[i]); //Current root moved to the end
+  
+    heapify(a, i, 0); //calling max heapify on the heap reduced
+    }
 }
 
 /* Quicksort Helper */
@@ -177,21 +212,6 @@ void quicksort (int a [], int n) {
    quicksortHelper (a, 0, n-1);
 }
 
-void IMPquicksortHelper(int a [], int left, int right) {
-   // check base case
-   if(left >= right) {
-      return;
-   }
-
-   int pivot = partition(a, left, right);
-
-   // elements less than pivot
-   quicksortHelper(a, left, pivot);
-
-   // elements of a larger value than pivot
-   quicksortHelper(a, pivot + 1, right);
-}
-
 /* Version 1: Standard Partition, swapping only as needed */
 int partition (int a [], int left, int right) {
    int pivot = a[left];
@@ -222,6 +242,21 @@ int partition (int a [], int left, int right) {
    return rightSpot;
 }
 
+void IMPquicksortHelper(int a [], int left, int right) {
+   // check base case
+   if(left >= right) {
+      return;
+   }
+
+   int pivot = partition(a, left, right);
+
+   // elements less than pivot
+   quicksortHelper(a, left, pivot);
+
+   // elements of a larger value than pivot
+   quicksortHelper(a, pivot + 1, right);
+}
+
 /* IMP Quicksort */
 void quicksortIMP (int a [], int n) {
    IMPquicksortHelper(a, 0, n - 1);
@@ -242,7 +277,7 @@ int main ( ) {
      int * des = (int *) malloc (size * sizeof(int));   // array with descending data
      
      int i;
-     for (i = 0; i< size; i++) {
+     for (i = 0; i < size; i++) {
         asc[i] = 2*i;
         ran[i] = rand();
         des[i] = 2*(size - i - 1); 
@@ -258,7 +293,7 @@ int main ( ) {
      int * tempDes = malloc (size * sizeof(int));
 
       // Resetting temp arrays back to normal
-     for (i = 0; i< size; i++) {
+     for (i = 0; i < size; i++) {
         tempAsc[i] = asc[i];
         tempRan[i] = ran[i];
         tempDes[i] = des[i];
@@ -290,7 +325,7 @@ int main ( ) {
      printf ("\n");
 
       // Resetting temp arrays back to normal
-     for (i = 0; i< size; i++) {
+     for (i = 0; i < size; i++) {
         tempAsc[i] = asc[i];
         tempRan[i] = ran[i];
         tempDes[i] = des[i];
@@ -322,75 +357,75 @@ int main ( ) {
      printf ("\n");
 
       // Resetting temp arrays back to normal
-     for (i = 0; i< size; i++) {
+     for (i = 0; i < size; i++) {
         tempAsc[i] = asc[i];
         tempRan[i] = ran[i];
         tempDes[i] = des[i];
      }
 
-   //  // timing for Merge sort
-   //   printf ("Merge sort %11d", size);
-   //   // ascending data
-   //   start_time = clock ();
-   //   mergeSort (tempAsc, size);
-   //   end_time = clock();
-   //   elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
-   //   printf ("%14.1lf", elapsed_time);
+    // timing for Merge sort
+    printf ("Merge sort %11d", size);
+    // ascending data
+    start_time = clock ();
+    mergeSort (tempAsc, size);
+    end_time = clock();
+    elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
+    printf ("%14.1lf", elapsed_time);
 
-   //   // random data
-   //   start_time = clock ();
-   //   mergeSort (tempRan, size);
-   //   end_time = clock();
-   //   elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
-   //   printf ("%15.1lf", elapsed_time);
+    // random data
+    start_time = clock ();
+    mergeSort (tempRan, size);
+    end_time = clock();
+    elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
+    printf ("%15.1lf", elapsed_time);
      
-   //   // descending data
-   //   start_time = clock ();
-   //   mergeSort (tempDes, size);
-   //   end_time = clock();
-   //   elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
-   //   printf ("%15.1lf", elapsed_time);
+    // descending data
+    start_time = clock ();
+    mergeSort (tempDes, size);
+    end_time = clock();
+    elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
+    printf ("%15.1lf", elapsed_time);
      
-   //   printf ("\n");
+    printf ("\n");
 
-   //    // Resetting temp arrays back to normal
-   //   for (i = 0; i< size; i++) {
-   //      tempAsc[i] = asc[i];
-   //      tempRan[i] = ran[i];
-   //      tempDes[i] = des[i];
-   //   }
+      // Resetting temp arrays back to normal
+     for (i = 0; i < size; i++) {
+        tempAsc[i] = asc[i];
+        tempRan[i] = ran[i];
+        tempDes[i] = des[i];
+     }
 
-   //   // timing for Heap sort
-   //   printf ("Heap sort %12d", size);
-   //   // ascending data
-   //   start_time = clock ();
-   //   heapSort (tempAsc, size);
-   //   end_time = clock();
-   //   elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
-   //   printf ("%14.1lf", elapsed_time);
+    // timing for Heap sort
+    printf ("Heap sort %12d", size);
+    // ascending data
+    start_time = clock ();
+    heapSort (tempAsc, size);
+    end_time = clock();
+    elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
+    printf ("%14.1lf", elapsed_time);
 
-   //   // random data
-   //   start_time = clock ();
-   //   heapSort (tempRan, size);
-   //   end_time = clock();
-   //   elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
-   //   printf ("%15.1lf", elapsed_time);
+    // random data
+    start_time = clock ();
+    heapSort (tempRan, size);
+    end_time = clock();
+    elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
+    printf ("%15.1lf", elapsed_time);
      
-   //   // descending data
-   //   start_time = clock ();
-   //   heapSort (tempDes, size);
-   //   end_time = clock();
-   //   elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
-   //   printf ("%15.1lf", elapsed_time);
+    // descending data
+    start_time = clock ();
+    heapSort (tempDes, size);
+    end_time = clock();
+    elapsed_time = (end_time - start_time) / (double) CLOCKS_PER_SEC;
+    printf ("%15.1lf", elapsed_time);
      
-   //   printf ("\n");
+    printf ("\n");
 
-   //    // Resetting temp arrays back to normal
-   //   for (i = 0; i< size; i++) {
-   //      tempAsc[i] = asc[i];
-   //      tempRan[i] = ran[i];
-   //      tempDes[i] = des[i];
-   //   }
+      // Resetting temp arrays back to normal
+     for (i = 0; i < size; i++) {
+        tempAsc[i] = asc[i];
+        tempRan[i] = ran[i];
+        tempDes[i] = des[i];
+     }
 
     // timing for Quicksort 
     printf ("Quicksort %12d", size);
@@ -418,7 +453,7 @@ int main ( ) {
     printf ("\n");
 
       // Resetting temp arrays back to normal
-     for (i = 0; i< size; i++) {
+     for (i = 0; i < size; i++) {
         tempAsc[i] = asc[i];
         tempRan[i] = ran[i];
         tempDes[i] = des[i];
