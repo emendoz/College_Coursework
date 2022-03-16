@@ -19,7 +19,7 @@
 *     - CS415 Insertion Sort Reading (https://blue.cs.sonoma.edu/~hwalker/courses/415-sonoma.sp22/readings/reading-insertion-sort.php)     *          
 *     - CS415 Quicksort Reading      (https://blue.cs.sonoma.edu/~hwalker/courses/415-sonoma.sp22/readings/reading-quicksort.php)          *
 *     - CS415 Lecture for March 14 on more efficient code styles                                                                           *
-*     -                                                                                                                                    *
+*     - Merge sort:                                                                                                                        *
 *     [include textbook(s), CS 415 labs or readings;                                                                                       *
 *       complete citations for Web or other written sources]                                                                               *
 *   Help obtained                                                                                                                          *
@@ -66,70 +66,67 @@ void insertionSort (int a [], int n) {
    }
 }
 
-void mergeHelper(int a [], int left, int mid, int right) {
-    int i, j, k;
-    int size1 = mid - left + 1;
-    int size2 = right - mid;
-  
-    /* create temp arrays */
-    int Left[size1], Right[size2];
-  
-    /* Copy data to temp arrays L[] and R[] */
-    for (i = 0; i < size1; i++)
-        Left[i] = a[left + i];
-    for (j = 0; j < size2; j++)
-        Right[j] = a[mid + 1 + j];
-  
-    /* Merge the temp arrays back into arr[l..r]*/
-    i = 0; // Initial index of first subarray
-    j = 0; // Initial index of second subarray
-    k = left; // Initial index of merged subarray
-    while (i < size1 && j < size2) {
-        if (Left[i] <= Right[j]) {
-            a[k] = Left[i];
-            i++;
-        }
-        else {
-            a[k] = Right[j];
-            j++;
-        }
-        k++;
-    }
-  
-    /* Copy the remaining elements of Left[], if there
-    are any */
-    while (i < size1) {
-        a[k] = Left[i];
-        i++;
-        k++;
-    }
-  
-    /* Copy the remaining elements of Right[], if there
-    are any */
-    while (j < size2) {
-        a[k] = Right[j];
-        j++;
-        k++;
-    }
-}
+// Merge two subarrays L and M into arr
+void mergeHelper(int a [], int p, int q, int r) {
 
-void mergeSortHelper(int a [], int left, int right) {
-    if (left < right) {
-        // Same as (l+r)/2, but avoids overflow for
-        // large l and h
-        int mid = left + (right - left) / 2;
-  
-        // Sort first and second halves
-        mergeSortHelper(a, left, mid);
-        mergeSortHelper(a, mid + 1, right);
-  
-        mergeHelper(a, left, mid, right);
+  // Create L ← A[p..q] and M ← A[q+1..r]
+  int n1 = q - p + 1;
+  int n2 = r - q;
+
+  int L[n1], M[n2];
+
+  for (int i = 0; i < n1; i++)
+    L[i] = a[p + i];
+  for (int j = 0; j < n2; j++)
+    M[j] = a[q + 1 + j];
+
+  // Maintain current index of sub-arrays and main array
+  int i, j, k;
+  i = 0;
+  j = 0;
+  k = p;
+
+  // Until we reach either end of either L or M, pick larger among
+  // elements L and M and place them in the correct position at A[p..r]
+  while (i < n1 && j < n2) {
+    if (L[i] <= M[j]) {
+      a[k] = L[i];
+      i++;
+    } else {
+      a[k] = M[j];
+      j++;
     }
+    k++;
+  }
+
+  // When we run out of elements in either L or M,
+  // pick up the remaining elements and put in A[p..r]
+  while (i < n1) {
+    a[k] = L[i];
+    i++;
+    k++;
+  }
+
+  while (j < n2) {
+    a[k] = M[j];
+    j++;
+    k++;
+  }
 }
 
 /* Merge sort */
-void mergeSort (int a [], int n) {
-   mergeSortHelper(a, 0, n - 1);
+void mergeSort(int a [], int lef, int rig) {
+  if (lef < rig) {
+
+    // m is the point where the array is divided into two subarrays
+    int m = lef + (rig - lef) / 2;
+
+    mergeSort(a, lef, m);
+    mergeSort(a, m + 1, rig);
+
+    // Merge the sorted subarrays
+    mergeHelper(arr, lef, m, rig);
+  }
 }
 
 void swap(int *a, int *b) {
