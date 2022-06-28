@@ -1,4 +1,4 @@
---- Database used in cs355 to answer homework questions.
+--- Creation file for database used in cs355 to answer homework questions.
 
 IF EXISTS BK_Prereq;
 IF EXISTS BK_Time_slot;
