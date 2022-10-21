@@ -55,12 +55,19 @@ Advanced topics to include some of the following: parallel architectures, DSP or
 other special purpose architecture, FPGA, reconfigurable architecture, and 
 asynchronous circuit design.
 
-## [CS355 - Database Management Systems Design (Taken Fall 2020)](https://github.com/emendoz/College_Coursework/tree/main/CS355/CourseDatabase)
+## [CS355 - Database Management Systems Design (Taken Fall 2020)](https://github.com/emendoz/College_Coursework/tree/main/CS355/)
 This course focuses on the theoretical as well as the practical aspects of modern 
 database systems.Topics include the study of the entity-relationship (E/R) model, 
 relational algebra, data normalization, XML as a semi-structured data model, data 
 integrity, and database administration. Current tools and technologies are used 
 to create and manipulate sample databases. 
+
+## [CS370 - Software Design and Development (Taken Fall 2022)](https://github.com/emendoz/College_Coursework/tree/main/CS370)
+Techniques of software design and development. Software lifecycle, requirements, 
+formal specification, metrics, design, functional and structural testing, rapid 
+prototyping, complexity, version control, and team management. Software metrics, 
+tools for component-based software development. Team-based, agile, and scrum 
+methodologies emphasized.
 
 ## [CS375 - Computer Graphics (Taken Fall 2021)](https://github.com/emendoz/College_Coursework/tree/main/CS375)
 An introduction to computer graphics. Survey of the fundamental algorithms and 
@@ -80,3 +87,23 @@ graph theory as used in algorithm analysis are covered. Standard design
 techniques such as divide-and-conquer, greedy method, dynamic programming, 
 heuristics, and probabilistic algorithms along with NP-completeness and 
 approximation algorithms are included.
+
+## [CS 454 - Theory of Computation (Taken Fall 2022)](https://github.com/emendoz/College_Coursework/tree/main/CS454)
+Overview of various kinds of computability, unsolvability, and decidability.
+The P versus NP problem. Abstract mathematical models of computing devices and 
+language specification systems with focus on regular and context-free languages. 
+Classification of computer-solvable problems.
+
+## [CS460 - Programming Languages (Taken Fall 2022)](https://github.com/emendoz/College_Coursework/tree/main/CS460)
+This course provides a survey of the syntactic, semantic, and implementation 
+features of functional, procedural, object-oriented, logic, and concurrent 
+programming languages.
+
+## [CS479 - Computer Vision Fundementals (Taken Fall 2022)](https://github.com/emendoz/College_Coursework/tree/main/CS479)
+Algorithms for face detection and face recognition are now widely employed for 
+surveillance, security and entertainment applications. This course will delve 
+into the study and implementation of such algorithms for detecting generic objects
+(pedestrians, animals, buildings, traffic signs, etc.). It will involve learning about 
+(i) image filtering operations such as smoothing, thresholding and edge detection, 
+(ii) interest point detection and representation methods such as SIFT and HOG, and 
+(iii) machine learning classification techniques such as SVM and convolutional neural networks.
